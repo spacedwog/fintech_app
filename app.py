@@ -1,4 +1,12 @@
 # ===============================
+# app.py (Streamlit Front-End)
+# ===============================
+import streamlit as st
+from database import create_tables
+from services.auth_service import AuthService
+from services.expense_service import ExpenseService
+from services.report_service import ReportService
+from utils.alerts import Alerts
 
 create_tables()
 
