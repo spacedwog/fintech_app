@@ -1,115 +1,96 @@
 import streamlit as st
-from models import Epic, UserStory, INVESTValidation, Prioridade
-from pdf_generator import PDFGenerator
+from database.db import Database
+from services.expense_service import ExpenseService
+from services.alert_service import AlertService
+from utils.api_receita import validar_cpf
+from datetime import date
 
-st.title("📊 Fintech - Planejamento Ágil")
+db = Database()
+expense_service = ExpenseService(db)
+alert_service = AlertService()
 
-# =====================
-# ÉPICO
-# =====================
-epic = Epic(
-    "Controle de Gastos e Receitas",
-    "Este épico é essencial para permitir que o usuário tenha uma visão completa de sua saúde financeira."
-)
+st.set_page_config(page_title="Fintech Inteligente", layout="wide")
 
-# =====================
-# USER STORIES
-# =====================
-stories = [
-    UserStory(
-        "Como usuário do aplicativo, quero registrar meus gastos, para controlar melhor minhas despesas.",
-        ["Dado que estou logado, quando registrar gasto, então ele deve ser salvo",
-         "Deve permitir inserir valor e categoria"]
-    ),
-    UserStory(
-        "Como usuário do aplicativo, quero registrar receitas, para acompanhar minha renda.",
-        ["Permitir inserir valor",
-         "Salvar no histórico"]
-    ),
-    UserStory(
-        "Como usuário do aplicativo, quero visualizar meu saldo, para entender minha situação financeira.",
-        ["Mostrar saldo atualizado",
-         "Atualizar após cada transação"]
-    ),
-    UserStory(
-        "Como pessoa que deseja organizar suas finanças, quero ver histórico, para analisar gastos.",
-        ["Listar transações",
-         "Permitir filtro por data"]
-    ),
-    UserStory(
-        "Como usuário do aplicativo, quero categorizar gastos, para melhor análise.",
-        ["Permitir criar categorias",
-         "Associar categoria ao gasto"]
-    ),
-]
+st.title("💰 Controle Inteligente de Gastos")
 
-# =====================
-# INVEST
-# =====================
-invest_list = [
-    INVESTValidation(
-        stories[0].descricao,
-        {
-            "I": "Independente pois pode ser desenvolvida separadamente",
-            "N": "Pode ser ajustada conforme necessidade",
-            "V": "Entrega valor direto ao usuário",
-            "E": "Fácil de estimar esforço",
-            "S": "Pequena e implementável rapidamente",
-            "T": "Pode ser testada com inputs de gastos"
-        }
-    ),
-    INVESTValidation(
-        stories[2].descricao,
-        {
-            "I": "Não depende de outras histórias complexas",
-            "N": "Pode mudar formato de exibição",
-            "V": "Ajuda na tomada de decisão",
-            "E": "Simples de estimar",
-            "S": "Pequena",
-            "T": "Testável com valores simulados"
-        }
-    )
-]
+# LOGIN
+st.sidebar.header("Login")
+cpf = st.sidebar.text_input("CPF")
 
-# =====================
-# PRIORIDADES
-# =====================
-prioridades = [
-    Prioridade(stories[0].descricao, "Base do sistema"),
-    Prioridade(stories[1].descricao, "Complementa o controle financeiro"),
-    Prioridade(stories[2].descricao, "Mostra valor ao usuário"),
-    Prioridade(stories[3].descricao, "Análise posterior"),
-    Prioridade(stories[4].descricao, "Melhoria avançada")
-]
+if st.sidebar.button("Entrar"):
+    nome = validar_cpf(cpf)
+    if nome:
+        st.session_state["user"] = {"cpf": cpf, "nome": nome}
+        st.success(f"Bem-vindo {nome}")
+    else:
+        st.error("CPF inválido")
 
-# =====================
-# INTERFACE
-# =====================
-st.header("📌 Épico")
-st.write(epic.nome)
-st.write(epic.justificativa)
+if "user" in st.session_state:
 
-st.header("📖 User Stories")
-for s in stories:
-    st.subheader(s.descricao)
-    for c in s.criterios:
-        st.write(f"- {c}")
+    user = st.session_state["user"]
 
-st.header("✅ INVEST")
-for inv in invest_list:
-    st.subheader(inv.historia)
-    for k, v in inv.validacoes.items():
-        st.write(f"{k}: {v}")
+    st.sidebar.success(f"Logado: {user['nome']}")
 
-st.header("📊 Prioridades")
-for p in prioridades:
-    st.subheader(p.historia)
-    st.write(p.justificativa)
+    menu = st.sidebar.selectbox("Menu", [
+        "Registrar Despesa",
+        "Visualizar Gastos",
+        "Resumo Mensal",
+        "Definir Orçamento"
+    ])
 
-# =====================
-# GERAR PDF
-# =====================
-if st.button("📄 Gerar PDF"):
-    pdf = PDFGenerator("fintech_planejamento.pdf")
-    pdf.gerar_pdf(epic, stories, invest_list, prioridades)
-    st.success("PDF gerado com sucesso!")
+    # US1 - Registrar despesa
+    if menu == "Registrar Despesa":
+        st.header("Nova Despesa")
+
+        valor = st.number_input("Valor", min_value=0.0)
+        categoria = st.selectbox("Categoria", ["Alimentação", "Transporte", "Moradia", "Lazer"])
+        data = st.date_input("Data", value=date.today())
+
+        if st.button("Salvar"):
+            expense_service.add_expense(1, 1, valor, data)
+            st.success("Despesa registrada!")
+
+    # US3 - Visualizar gastos
+    elif menu == "Visualizar Gastos":
+        st.header("Gastos por Período")
+
+        inicio = st.date_input("Início")
+        fim = st.date_input("Fim")
+
+        if st.button("Buscar"):
+            dados = expense_service.get_expenses_by_period(1, inicio, fim)
+
+            if dados:
+                total = sum([d[3] for d in dados])
+                st.write("Total gasto:", total)
+                st.dataframe(dados)
+            else:
+                st.info("Nenhum dado encontrado")
+
+    # US5 - Resumo mensal
+    elif menu == "Resumo Mensal":
+        st.header("Resumo")
+
+        dados = expense_service.get_expenses_by_period(1, "2026-03-01", "2026-03-30")
+
+        total = sum([d[3] for d in dados])
+
+        st.metric("Total gasto", total)
+
+    # US4 - Orçamento
+    elif menu == "Definir Orçamento":
+        st.header("Orçamento")
+
+        limite = st.number_input("Limite mensal")
+
+        if st.button("Salvar limite"):
+            st.session_state["limite"] = limite
+
+        if "limite" in st.session_state:
+            dados = expense_service.get_expenses_by_period(1, "2026-03-01", "2026-03-30")
+            total = sum([d[3] for d in dados])
+
+            alerta = alert_service.check_budget(total, st.session_state["limite"])
+
+            if alerta:
+                st.warning(alerta)
