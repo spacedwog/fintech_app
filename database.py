@@ -1,4 +1,24 @@
 # ===============================
+# database.py
+# ===============================
+import sqlite3
+
+def get_connection():
+    return sqlite3.connect("fintech.db", check_same_thread=False)
+
+def create_tables():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    # 5FN Normalized Tables
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        cpf TEXT UNIQUE,
+        name TEXT
+    )
+    """)
+
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS categories (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
