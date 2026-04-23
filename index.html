@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fintech UI</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h2>Fintech</h2>
+    <ul>
+      <li>Dashboard</li>
+      <li>Transações</li>
+      <li>Relatórios</li>
+    </ul>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- DASHBOARD -->
+    <h1>Dashboard</h1>
+
+    <div class="saldo">
+      Saldo Total: R$ 5.000,00
+    </div>
+
+    <div class="cards">
+      <div class="card entrada">
+        <p>Entradas</p>
+        <h2>R$ 7.000</h2>
+      </div>
+
+      <div class="card saida">
+        <p>Saídas</p>
+        <h2>R$ 2.000</h2>
+      </div>
+    </div>
+
+    <!-- FORM TRANSAÇÃO -->
+    <h2>Nova Transação</h2>
+
+    <form class="form">
+      <input type="text" placeholder="Tipo (Entrada/Saída)">
+      <input type="number" placeholder="Valor">
+      <input type="text" placeholder="Categoria">
+      <input type="date">
+      <button>Salvar</button>
+    </form>
+
+    <!-- LISTAGEM -->
+    <h2>Transações</h2>
+
+    <table>
+      <tr>
+        <th>Data</th>
+        <th>Categoria</th>
+        <th>Valor</th>
+      </tr>
+      <tr>
+        <td>01/04</td>
+        <td>Alimentação</td>
+        <td>R$ 50</td>
+      </tr>
+      <tr>
+        <td>02/04</td>
+        <td>Salário</td>
+        <td>R$ 3000</td>
+      </tr>
+    </table>
+
+  </div>
+
+</body>
+</html>
