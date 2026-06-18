@@ -1,3 +1,4 @@
+
 """
 Gera o PDF de entrega e o ZIP final para a atividade FIAP.
 Execute: python gerar_entrega.py
