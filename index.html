@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fintech Inteligente – Dashboard</title>
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS (local) -->
+  <link rel="stylesheet" href="style/tailwind.min.css" />
 
   <!-- CSS customizado -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style/style.css" />
 </head>
 <body class="bg-gray-950 text-white min-h-screen">
 
@@ -91,7 +91,7 @@
           <p class="text-red-300 font-semibold text-sm">⚠️ Orçamento ultrapassado em Alimentação</p>
           <p class="text-red-400 text-xs mt-0.5">Você gastou R$ 1.280 de R$ 1.000 planejados este mês.</p>
         </div>
-        <button class="text-red-400 hover:text-red-200 transition text-xl leading-none flex-shrink-0 alert-close">&times;</button>
+        <span class="text-red-400 text-xl leading-none flex-shrink-0">&times;</span>
       </div>
 
       <!-- ===== KPI CARDS ===== -->
@@ -118,7 +118,7 @@
               <span>R$ 341,60 restante</span>
             </div>
             <div class="w-full bg-gray-800 rounded-full h-1.5">
-              <div class="bg-amber-400 h-1.5 rounded-full" style="width: 90%"></div>
+              <div class="bg-amber-400 h-1.5 rounded-full w-[90%]"></div>
             </div>
           </div>
         </div>
@@ -143,32 +143,32 @@
           <div class="flex items-end justify-between gap-3 h-36">
             <div class="chart-col flex flex-col items-center gap-2 flex-1">
               <span class="text-xs text-gray-400">1,9k</span>
-              <div class="chart-bar bg-emerald-500/30 rounded-t-md w-full" style="height:42%"></div>
+              <div class="chart-bar bg-emerald-500/30 rounded-t-md w-full h-[42%]"></div>
               <span class="text-xs text-gray-500">Jan</span>
             </div>
             <div class="chart-col flex flex-col items-center gap-2 flex-1">
               <span class="text-xs text-gray-400">2,4k</span>
-              <div class="chart-bar bg-emerald-500/30 rounded-t-md w-full" style="height:55%"></div>
+              <div class="chart-bar bg-emerald-500/30 rounded-t-md w-full h-[55%]"></div>
               <span class="text-xs text-gray-500">Fev</span>
             </div>
             <div class="chart-col flex flex-col items-center gap-2 flex-1">
               <span class="text-xs text-gray-400">2,1k</span>
-              <div class="chart-bar bg-emerald-500/30 rounded-t-md w-full" style="height:48%"></div>
+              <div class="chart-bar bg-emerald-500/30 rounded-t-md w-full h-[48%]"></div>
               <span class="text-xs text-gray-500">Mar</span>
             </div>
             <div class="chart-col flex flex-col items-center gap-2 flex-1">
               <span class="text-xs text-gray-400">2,8k</span>
-              <div class="chart-bar bg-emerald-500/30 rounded-t-md w-full" style="height:64%"></div>
+              <div class="chart-bar bg-emerald-500/30 rounded-t-md w-full h-[64%]"></div>
               <span class="text-xs text-gray-500">Abr</span>
             </div>
             <div class="chart-col flex flex-col items-center gap-2 flex-1">
               <span class="text-xs text-gray-400">2,6k</span>
-              <div class="chart-bar bg-emerald-500/30 rounded-t-md w-full" style="height:59%"></div>
+              <div class="chart-bar bg-emerald-500/30 rounded-t-md w-full h-[59%]"></div>
               <span class="text-xs text-gray-500">Mai</span>
             </div>
             <div class="chart-col flex flex-col items-center gap-2 flex-1">
               <span class="text-xs text-emerald-400 font-semibold">3,2k</span>
-              <div class="chart-bar chart-bar-active bg-emerald-400 rounded-t-md w-full" style="height:73%"></div>
+              <div class="chart-bar chart-bar-active bg-emerald-400 rounded-t-md w-full h-[73%]"></div>
               <span class="text-xs text-emerald-400 font-semibold">Jun</span>
             </div>
           </div>
@@ -188,7 +188,7 @@
                 <span class="text-sm font-semibold text-white">R$ 1.280</span>
               </div>
               <div class="w-full bg-gray-800 rounded-full h-1.5">
-                <div class="bg-red-400 h-1.5 rounded-full" style="width:40%"></div>
+                <div class="bg-red-400 h-1.5 rounded-full w-[40%]"></div>
               </div>
             </div>
 
@@ -201,7 +201,7 @@
                 <span class="text-sm font-semibold text-white">R$ 900</span>
               </div>
               <div class="w-full bg-gray-800 rounded-full h-1.5">
-                <div class="bg-blue-400 h-1.5 rounded-full" style="width:28%"></div>
+                <div class="bg-blue-400 h-1.5 rounded-full w-[28%]"></div>
               </div>
             </div>
 
@@ -214,7 +214,7 @@
                 <span class="text-sm font-semibold text-white">R$ 480</span>
               </div>
               <div class="w-full bg-gray-800 rounded-full h-1.5">
-                <div class="bg-purple-400 h-1.5 rounded-full" style="width:15%"></div>
+                <div class="bg-purple-400 h-1.5 rounded-full w-[15%]"></div>
               </div>
             </div>
 
@@ -227,7 +227,7 @@
                 <span class="text-sm font-semibold text-white">R$ 310</span>
               </div>
               <div class="w-full bg-gray-800 rounded-full h-1.5">
-                <div class="bg-amber-400 h-1.5 rounded-full" style="width:10%"></div>
+                <div class="bg-amber-400 h-1.5 rounded-full w-[10%]"></div>
               </div>
             </div>
 
@@ -240,7 +240,7 @@
                 <span class="text-sm font-semibold text-white">R$ 188</span>
               </div>
               <div class="w-full bg-gray-800 rounded-full h-1.5">
-                <div class="bg-gray-400 h-1.5 rounded-full" style="width:6%"></div>
+                <div class="bg-gray-400 h-1.5 rounded-full w-[6%]"></div>
               </div>
             </div>
 
@@ -392,12 +392,6 @@
     </a>
   </nav>
 
-  <script>
-    // Fechar alerta ao clicar no X
-    document.querySelector('.alert-close').addEventListener('click', function() {
-      this.closest('div').remove();
-    });
-  </script>
 
 </body>
 </html>
